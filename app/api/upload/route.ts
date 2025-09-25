@@ -32,15 +32,15 @@ export async function POST(req: Request) {
   }
 
   // Save file metadata
-  const { error: insertError } = await supabase.from("documents").insert({
+  const { data: insertedDoc, error: insertError } = await supabase.from("documents").insert({
     user_id: user.id,
     file_name: file.name,
     file_path: filePath,
-  });
+  }).select("id").single();
 
   if (insertError) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true, path: filePath });
+  return NextResponse.json({ success: true, documentId: insertedDoc.id, path: filePath });
 }
