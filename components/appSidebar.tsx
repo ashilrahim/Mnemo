@@ -1,6 +1,11 @@
 "use client";
 
-import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
+import {
+  Home,
+  WalletMinimal,
+  User,
+  LucideLogOut,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -16,38 +21,36 @@ import { ModeToggle } from "./togglemode";
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/utils/supabase/client";
+import LoginButton from "./loginLogoutButton";
+import Image from "next/image";
+
+const supabase = createClient();
 
 // Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "pricing",
+    url: "dashboard/pricing",
+    icon: WalletMinimal,
   },
+
+
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Log Out",
+    icon: LucideLogOut,
+    onclick: async () => {
+      supabase.auth.signOut();
+      window.location.href = "/";
+    },
   },
 ];
 
 const AppSidebar = () => {
-  const supabase = createClient();
   const [userName, setUserName] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,63 +60,78 @@ const AppSidebar = () => {
     const fetchUser = async () => {
       setLoading(true);
       try {
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: authError,
+        } = await supabase.auth.getUser();
         if (authError) {
           console.error("Auth error:", authError);
           if (mounted) setLoading(false);
           return;
         }
 
-          if (!user) {
-            // no user - clear
-            if (mounted) {
-              setUserName(null);
-              setUserEmail(null);
-              setLoading(false);
-            }
-            return;
-          }
-
-          
-
+        if (!user) {
+          // no user - clear
           if (mounted) {
-            setUserName(user.user_metadata?.full_name || user.email?.split("@")[0] || "Unknown");
-            setUserEmail(user.user_metadata?.email );
+            setUserName(null);
+            setUserEmail(null);
             setLoading(false);
           }
+          return;
+        }
 
-        
+        if (mounted) {
+          setUserName(
+            user.user_metadata?.full_name ||
+            user.email?.split("@")[0] ||
+            "Unknown"
+          );
+          setUserEmail(user.user_metadata?.email);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Failed to fetch user info:", error);
         if (mounted) setLoading(false);
       }
-    }
+    };
 
-    fetchUser()
+    fetchUser();
 
     return () => {
       mounted = false;
     };
-
-  }, [supabase])
+  }, [supabase]);
 
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Mnemo</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            <Image src="/Logo.png" alt="logo" width={40}
+              height={40} />
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="mt-5">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
+                  {item.onclick ? (
+                    <SidebarMenuButton asChild onClick={item.onclick}>
+                      <button>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </button>
+                    </SidebarMenuButton>
+                  ) : (
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  )}
                 </SidebarMenuItem>
               ))}
+              <ModeToggle />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -132,11 +150,8 @@ const AppSidebar = () => {
                 </span>
               </div>
             </div>
-
           </SidebarMenuButton>
-
         </SidebarGroup>
-
       </SidebarFooter>
     </Sidebar>
   );
