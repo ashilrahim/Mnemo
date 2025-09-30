@@ -35,7 +35,7 @@ const items = [
   },
   {
     title: "pricing",
-    url: "dashboard/pricing",
+    url: "/pricing",
     icon: WalletMinimal,
   },
 
@@ -53,6 +53,7 @@ const items = [
 const AppSidebar = () => {
   const [userName, setUserName] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [credits, setcredits] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -80,6 +81,11 @@ const AppSidebar = () => {
           return;
         }
 
+        const { data: creditsData, error: error } = await supabase.from("user_credits").select("credits").eq("user_id", user.id).single()
+
+        if (error) console.error("credits fetch error", error);
+
+
         if (mounted) {
           setUserName(
             user.user_metadata?.full_name ||
@@ -87,6 +93,7 @@ const AppSidebar = () => {
             "Unknown"
           );
           setUserEmail(user.user_metadata?.email);
+          setcredits(creditsData?.credits ?? 0);
           setLoading(false);
         }
       } catch (error) {
@@ -138,10 +145,16 @@ const AppSidebar = () => {
       </SidebarContent>
       <SidebarFooter>
         <SidebarGroup>
+          <div className="flex justify-start items-center mb-3 ml-3">
+            <span className="text-sm font-medium">
+              {loading ? "..." : `${credits ?? 0} Credits left`}
+            </span>
+          </div>
           <SidebarMenuButton className="w-full justify-between gap-3 h-12">
             <div className="flex items-center justify-between gap-4">
               <User className="h-5 w-5 rounded-md" />
               <div className="flex flex-col items-start">
+
                 <span className="text-sm font-medium">
                   {loading ? "..." : userName ?? "Not signed in"}
                 </span>

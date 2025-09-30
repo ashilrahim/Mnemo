@@ -1,9 +1,21 @@
+
+
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
-import LoginButton from "@/components/loginLogoutButton";
-import Image from "next/image";
+
+import Link from "next/link";
+
+import { GridPattern } from "@/components/ui/grid-pattern";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/moving-border";
+import { Features } from "@/components/features-1";
+import { NavBar } from "@/components/ui/tubelight-navbar";
+
+
 
 export default async function Home() {
+
+  
   const supabase = createClient();
   const {
     data: { user },
@@ -14,93 +26,106 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <LoginButton />
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <main className="flex flex-col min-h-screen">
+      {/* navbar section */}
+      <NavBar />
+      {/* Hero Section */}
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-30 md:py-55">
+        <h1 className="text-4xl md:text-6xl font-sans text-gray-900 mb-6">
+          Turn Your Documents into Smart Flashcards
+        </h1>
+        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-8">
+          Upload your study materials and instantly generate flashcards powered
+          by AI. Save time, remember more, and make learning effortless.
+        </p>
+        <Link
+          href=""
+        >
+          <Button borderRadius="1.75rem"
+            className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-500 dark:border-slate-800">
+            Get Started
+          </Button>
+        </Link>
+        <GridPattern
+          squares={[
+            [4, 4],
+            [5, 1],
+            [8, 2],
+            [5, 3],
+            [5, 5],
+            [10, 10],
+            [12, 15],
+            [15, 10],
+            [10, 15],
+            [15, 10],
+            [10, 15],
+            [15, 10],
+          ]}
+          className={cn(
+            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-40%] h-[200%] skew-y-12",
+          )}
         />
-      </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+      </section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+      {/* How It Works */}
+      <section className="px-6 py-20">
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <Features />
+
+
+
+      </section>
+
+      {/* Sample Flashcards Section */}
+      <section className="px-6 py-20">
+        <h2 className="text-3xl font-bold text-center mb-12">Sample Flashcards</h2>
+        <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+          <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition">
+            <p className="font-medium mb-4">Q: What is the capital of France?</p>
+            <ul className="space-y-2 text-gray-700 text-sm">
+              <li>Berlin</li>
+              <li>Madrid</li>
+              <li className="font-semibold text-green-600">Paris ✅</li>
+              <li>Rome</li>
+            </ul>
+          </div>
+          <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition">
+            <p className="font-medium mb-4">
+              Q: Who proposed the theory of relativity?
+            </p>
+            <ul className="space-y-2 text-gray-700 text-sm">
+              <li>Newton</li>
+              <li className="font-semibold text-green-600">Einstein ✅</li>
+              <li>Galileo</li>
+              <li>Bohr</li>
+            </ul>
+          </div>
+          <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition">
+            <p className="font-medium mb-4">Q: 2 + 2 × 2 = ?</p>
+            <ul className="space-y-2 text-gray-700 text-sm">
+              <li>4</li>
+              <li className="font-semibold text-green-600">6 ✅</li>
+              <li>8</li>
+              <li>2</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-6 mt-auto">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-600">
+          <p>© {new Date().getFullYear()} Mnemo. All rights reserved.</p>
+          <div className="flex gap-4 mt-2 md:mt-0">
+            <Link href="/about">About</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

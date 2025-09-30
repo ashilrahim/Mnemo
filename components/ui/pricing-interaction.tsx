@@ -33,7 +33,7 @@ export function PricingInteraction ({
   const [pro, setPro] = React.useState(proMonth);
 
   return (
-    <div className="border-2 rounded-[32px] p-3 shadow-md max-w-sm w-full flex flex-col items-center gap-3 bg-white">
+    <div className="border-2 rounded-[32px] p-3 shadow-md max-w-sm w-full flex flex-col items-center gap-3 bg-amber-50" >
         <div className="rounded-full relative w-full bg-slate-100 p-1.5 flex items-center">
           <button
             className="font-semibold rounded-full w-full p-1.5 text-slate-800 z-20"

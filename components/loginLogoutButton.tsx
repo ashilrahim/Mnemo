@@ -10,14 +10,35 @@ const LoginButton = () => {
   const router = useRouter();
   const supabase = createClient();
   useEffect(() => {
-    const fetchUser = async () => {
+    let isMounted = true;
+
+    const bootstrap = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      setUser(user);
+      if (isMounted) setUser(user);
     };
-    fetchUser();
-  }, []);
+
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (!isMounted) return;
+        if (event === "SIGNED_IN") {
+          setUser(session?.user ?? null);
+          router.replace("/dashboard");
+        } else if (event === "SIGNED_OUT") {
+          setUser(null);
+          router.replace("/");
+        }
+      }
+    );
+
+    bootstrap();
+
+    return () => {
+      isMounted = false;
+      subscription.subscription?.unsubscribe();
+    };
+  }, [supabase, router]);
   if (user) {
     return (
       <Button
@@ -32,7 +53,7 @@ const LoginButton = () => {
   }
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       onClick={() => {
         router.push("/login");
       }}
