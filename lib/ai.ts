@@ -8,7 +8,7 @@ try {
   if (geminiApiKey) {
     const genAI = new GoogleGenerativeAI(geminiApiKey);
     // Use a widely available stable model
-    model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    model = genAI.getGenerativeModel({ model: '	gemini-2.5-flash-lite' });
     console.log('Gemini model initialized successfully');
   } else {
     console.error('GEMINI_API_KEY is not set');

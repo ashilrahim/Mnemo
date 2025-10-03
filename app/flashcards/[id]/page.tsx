@@ -73,22 +73,22 @@ export default function FlashcardsPage() {
   const card = flashcards[currentIndex];
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-4 border rounded-md shadow-md">
-      <p className="text-sm text-gray-500 mb-2">
+    <div className="max-w-xl mx-auto mt-10 p-4 border rounded-md shadow-md ">
+      <p className="text-sm text-white-500 mb-2">
         Flashcard {currentIndex + 1} / {flashcards.length}
       </p>
       <h2 className="text-xl font-semibold mb-4">{card.question}</h2>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 dark:text-black">
         {card.options.map((option, idx) => {
           const isCorrect = idx === card.correct_option_index;
           const isSelected = idx === selectedOption;
 
           let bgClass = 'bg-blue-100';
           if (selectedOption !== null) {
-            if (isSelected && isCorrect) bgClass = 'bg-green-400 text-white';
-            else if (isSelected && !isCorrect) bgClass = 'bg-red-400 text-white';
-            else if (isCorrect) bgClass = 'bg-green-200';
-            else bgClass = 'bg-gray-100';
+            if (isSelected && isCorrect) bgClass = 'bg-green-400 text-white dark:text-black';
+            else if (isSelected && !isCorrect) bgClass = 'bg-red-400 text-white dark:text-black';
+            else if (isCorrect) bgClass = 'bg-green-200 text-black dark:text-black';
+            else bgClass = 'bg-gray-100 text-black dark:text-black';
           }
 
           return (

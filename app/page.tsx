@@ -7,15 +7,19 @@ import Link from "next/link";
 
 import { GridPattern } from "@/components/ui/grid-pattern";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/moving-border";
+
 import { Features } from "@/components/features-1";
-import { NavBar } from "@/components/ui/tubelight-navbar";
+
+import { PricingInteraction } from "@/components/ui/pricing-interaction";
+import { FloatingHeader } from "@/components/floating-header";
+
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 
 
 export default async function Home() {
 
-  
+
   const supabase = createClient();
   const {
     data: { user },
@@ -28,23 +32,20 @@ export default async function Home() {
   return (
     <main className="flex flex-col min-h-screen">
       {/* navbar section */}
-      <NavBar />
+      <FloatingHeader />
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-30 md:py-55">
-        <h1 className="text-4xl md:text-6xl font-sans text-gray-900 mb-6">
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-30 md:py-55" id="home">
+        <h1 className="text-4xl md:text-6xl font-sans text-gray-900 mb-6 in-dark:text-white">
           Turn Your Documents into Smart Flashcards
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-8">
+        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-8 in-dark:text-amber-50" >
           Upload your study materials and instantly generate flashcards powered
           by AI. Save time, remember more, and make learning effortless.
         </p>
         <Link
-          href=""
+          href="/login"
         >
-          <Button borderRadius="1.75rem"
-            className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-500 dark:border-slate-800">
-            Get Started
-          </Button>
+          <InteractiveHoverButton />
         </Link>
         <GridPattern
           squares={[
@@ -71,12 +72,21 @@ export default async function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-20" id="features">
 
         <Features />
 
 
 
+      </section>
+      {/* pricing section */}
+
+      <section className="px-6 py-10 flex items-center justify-center flex-col" id="pricing">
+        <h2 className="text-4xl font-sans text-center mb-12">Pricing</h2>
+        <PricingInteraction starterMonth={3.99}
+          starterAnnual={1.49}
+          proMonth={6.99}
+          proAnnual={3.49} />
       </section>
 
       {/* Sample Flashcards Section */}
@@ -85,7 +95,7 @@ export default async function Home() {
         <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
           <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition">
             <p className="font-medium mb-4">Q: What is the capital of France?</p>
-            <ul className="space-y-2 text-gray-700 text-sm">
+            <ul className="space-y-2 text-gray-700 dark:text-white text-sm">
               <li>Berlin</li>
               <li>Madrid</li>
               <li className="font-semibold text-green-600">Paris ✅</li>
@@ -96,7 +106,7 @@ export default async function Home() {
             <p className="font-medium mb-4">
               Q: Who proposed the theory of relativity?
             </p>
-            <ul className="space-y-2 text-gray-700 text-sm">
+            <ul className="space-y-2 text-gray-700 dark:text-white text-sm">
               <li>Newton</li>
               <li className="font-semibold text-green-600">Einstein ✅</li>
               <li>Galileo</li>
@@ -105,7 +115,7 @@ export default async function Home() {
           </div>
           <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition">
             <p className="font-medium mb-4">Q: 2 + 2 × 2 = ?</p>
-            <ul className="space-y-2 text-gray-700 text-sm">
+            <ul className="space-y-2 text-gray-700 dark:text-white text-sm">
               <li>4</li>
               <li className="font-semibold text-green-600">6 ✅</li>
               <li>8</li>
@@ -117,7 +127,7 @@ export default async function Home() {
 
       {/* Footer */}
       <footer className="py-6 mt-auto">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-600">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-600 dark:text-white">
           <p>© {new Date().getFullYear()} Mnemo. All rights reserved.</p>
           <div className="flex gap-4 mt-2 md:mt-0">
             <Link href="/about">About</Link>
