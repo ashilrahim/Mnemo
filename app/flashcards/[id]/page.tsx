@@ -45,6 +45,7 @@ export default function FlashcardsPage() {
     };
 
     fetchFlashcards();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [documentId]);
 
   const handleOptionClick = (index: number) => {

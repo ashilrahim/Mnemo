@@ -21,7 +21,6 @@ import { ModeToggle } from "./togglemode";
 import { useEffect, useState } from "react";
 
 import { createClient } from "@/utils/supabase/client";
-import LoginButton from "./loginLogoutButton";
 import Image from "next/image";
 
 const supabase = createClient();
@@ -107,7 +106,7 @@ const AppSidebar = () => {
     return () => {
       mounted = false;
     };
-  }, [supabase]);
+  }, []);
 
   return (
     <Sidebar>
