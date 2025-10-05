@@ -27,6 +27,8 @@ interface UploadFormProps {
 export default function UploadForm({ onUpload }: UploadFormProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<"idle" | "success" | "error">("idle");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // handle selecting files
@@ -56,18 +58,13 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
 
       if (response.ok) {
         const data = await response.json();
-        <Alert>
-          <CheckCircle2 />
-          <AlertTitle>Sucess Your file upload Successfully</AlertTitle>
-        </Alert>
+        setUploadStatus("success");
+        setUploaded(true);
         if (onUpload && data.documentId) {
           onUpload(data.documentId);
         }
       } else {
-        <Alert variant="destructive">
-          <AlertCircle />
-          <AlertTitle>File Upload Failed</AlertTitle>
-        </Alert>
+        setUploadStatus("error");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -212,16 +209,32 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
             {...(uploading && { disabled: true })}
             onClick={(e) => {
               e.stopPropagation();   // 👈 prevent triggering handleClick
-            }}> 
-             {uploading ? <><Spinner /> uploading</> : "Upload Document"}
+            }}>
+            {uploading ? (
+              <>
+                <Spinner /> Uploading...
+              </>
+            ) : uploaded ? (
+              "Uploaded"
+            ) : (
+              "Upload Document"
+            )}
 
           </Button>
+        )}
 
+        {uploadStatus === "success" && (
+          <Alert>
+            <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <AlertTitle>File uploaded successfully!</AlertTitle>
+          </Alert>
+        )}
 
-
-
-
-
+        {uploadStatus === "error" && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-5 w-5 text-red-600" />
+            <AlertTitle> File upload failed. Please try again.</AlertTitle>
+          </Alert>
         )}
       </div>
       {/* upload button */}
