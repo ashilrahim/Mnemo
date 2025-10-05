@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/lib/auth-actions";
+import Image from "next/image";
 import React from "react";
 
 const SignInWithGoogleButton = () => {
@@ -13,7 +14,12 @@ const SignInWithGoogleButton = () => {
         signInWithGoogle();
       }}
     >
-      Login with Google
+      Login with <Image
+        src="/google.svg"
+        alt="google logomark"
+        width={20}
+        height={20}
+      />
     </Button>
   );
 };
