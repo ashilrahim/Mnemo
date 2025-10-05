@@ -213,7 +213,7 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
             onClick={(e) => {
               e.stopPropagation();   // 👈 prevent triggering handleClick
             }}> 
-             {uploading ? `${<Spinner />} uploading` : "Upload Document"}
+             {uploading ? <><Spinner /> uploading</> : "Upload Document"}
 
           </Button>
 
