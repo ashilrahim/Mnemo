@@ -22,38 +22,44 @@ import { useEffect, useState } from "react";
 
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "pricing",
-    url: "/pricing",
-    icon: WalletMinimal,
-  },
-
-
-  {
-    title: "Log Out",
-    icon: LucideLogOut,
-    onclick: async () => {
-      supabase.auth.signOut();
-      window.location.href = "/";
-    },
-  },
-];
 
 const AppSidebar = () => {
+  const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [credits, setcredits] = useState<number | null>(null);
+  const [credits, setCredits] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+
+   const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      router.push("/"); 
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const items = [
+    {
+      title: "Home",
+      url: "/",
+      icon: Home,
+    },
+    {
+      title: "Pricing",
+      url: "/pricing",
+      icon: WalletMinimal,
+    },
+    {
+      title: "Log Out",
+      icon: LucideLogOut,
+      onclick: handleLogout,
+    },
+  ];
 
   useEffect(() => {
     let mounted = true;
@@ -92,7 +98,7 @@ const AppSidebar = () => {
             "Unknown"
           );
           setUserEmail(user.user_metadata?.email);
-          setcredits(creditsData?.credits ?? 0);
+          setCredits(creditsData?.credits ?? 0);
           setLoading(false);
         }
       } catch (error) {
