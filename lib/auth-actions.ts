@@ -65,10 +65,11 @@ export async function signout() {
 }
 
 export async function signInWithGoogle() {
-  const supabase =  createClient();
+  const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`, // 👈 add this
       queryParams: {
         access_type: "offline",
         prompt: "consent",

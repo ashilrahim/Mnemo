@@ -1,44 +1,22 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import React from "react";
+import { createClient } from "@/utils/supabase/server";
 import { LoginForm } from "./components/loginForm";
-import { Spinner } from "@/components/ui/spinner";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
-  const [checking, setChecking] = useState(true);
-  const router = useRouter();
+
+const LoginPage = async () => {
   const supabase = createClient();
-
-  useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (user) {
-        router.replace("/dashboard");
-      } else {
-        setChecking(false);
-      }
-    };
-
-    checkUser();
-  }, [router, supabase]);
-
-  if (checking) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500 animate-pulse">Redirecting to your dashboard...</p>
-        <Spinner />
-      </div>
-    );
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+     redirect("/dashboard");
   }
-
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex h-svh items-center justify-center">
       <LoginForm />
     </div>
   );
-}
+};
+
+export default LoginPage;
