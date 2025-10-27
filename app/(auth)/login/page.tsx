@@ -9,7 +9,9 @@ const LoginPage = async () => {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    redirect("/dashboard");
+    setTimeout(() => {
+      redirect("/dashboard");
+    }, 2000);
   }
   return (
     <div className="flex h-svh items-center justify-center">
