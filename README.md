@@ -1,3 +1,4 @@
+
 # 🧠 Mnemo – AI MCQ Flashcard Generator
 
 Turn your notes and documents into smart flashcards powered by AI.  
@@ -12,7 +13,7 @@ Mnemo helps you learn faster by automatically creating MCQs and flashcards from 
 
 
 ## 📸 Preview
-<img width="1898" height="923" alt="mnemoscnsht" src="https://mnemo-pi.vercel.app" />
+<img width="1898" height="923" alt="mnemoscnsht" src="https://github.com/user-attachments/assets/f8b25ecd-69be-4048-ab0a-c6ec6b93b3df" />
 
 ---
 
