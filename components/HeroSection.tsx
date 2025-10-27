@@ -37,6 +37,7 @@ export default function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
+
                     >
                         <BlurText
                             text="Turn Your Documents into Smart Flashcards"
@@ -44,7 +45,7 @@ export default function HeroSection() {
                             animateBy="words"
                             direction="top"
                             onAnimationComplete={handleAnimationComplete}
-                            className="text-4xl md:text-6xl font-sans text-gray-900 mb-6 dark:text-white"
+                            className="text-4xl md:text-6xl text-center font-sans text-gray-900 mb-6 dark:text-white"
                         />
                     </motion.div>
                 )}
