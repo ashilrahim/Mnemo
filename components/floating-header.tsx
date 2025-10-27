@@ -1,14 +1,14 @@
 "use client"
 
 import React from 'react';
-import {  MenuIcon } from 'lucide-react';
+import { MenuIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import LoginButton from './loginLogoutButton';
 import { ModeToggle } from './togglemode';
-
+import Link from 'next/link';
 
 export function FloatingHeader() {
 	const [open, setOpen] = React.useState(false);
@@ -37,11 +37,14 @@ export function FloatingHeader() {
 			)}
 		>
 			<nav className="mx-auto flex items-center justify-between p-1.5">
-				<div className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 duration-100">
-					<Image src="/Logo.png" alt="logo" width={40}
-						height={40} />
-					<p className="font-mono text-base font-bold">Mnemo</p>
-				</div>
+				<Link href="/">
+
+					<div className="hover:bg-accent flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 duration-100" >
+						<Image src="/Logo.png" alt="logo" width={40}
+							height={40} />
+						<p className="font-mono text-base font-bold">Mnemo</p>
+					</div>
+				</Link>
 				<div className="hidden items-center gap-1 lg:flex">
 					{links.map((link) => (
 						<a key={link.label}
@@ -70,11 +73,11 @@ export function FloatingHeader() {
 							side="left"
 						>
 							{/* Accessibility fix: hidden title */}
-              <SheetHeader>
-                
-                  <SheetTitle>Navigation Menu</SheetTitle>
-                
-              </SheetHeader>
+							<SheetHeader>
+
+								<SheetTitle>Navigation Menu</SheetTitle>
+
+							</SheetHeader>
 							<div className="grid gap-y-2 overflow-y-auto px-4 pt-12 pb-5">
 								{links.map((link) => (
 									<a key={link.label}
