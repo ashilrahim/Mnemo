@@ -31,15 +31,8 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
- if (user) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white dark:bg-black">
-        <p className="text-gray-500 dark:text-gray-200 animate-pulse text-lg">
-          Redirecting to your dashboard...
-        </p>
-        {redirect("/dashboard")}
-      </div>
-    );
+  if (user) {
+    redirect("/dashboard");
   }
 
   return (
