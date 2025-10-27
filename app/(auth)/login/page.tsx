@@ -1,7 +1,7 @@
 import React from "react";
-import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { LoginForm } from "./components/loginForm";
+import Redirecting from "./components/redirect";
 
 const LoginPage = async () => {
   const supabase = createClient();
@@ -9,9 +9,7 @@ const LoginPage = async () => {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    setTimeout(() => {
-      redirect("/dashboard");
-    }, 2000);
+     return <Redirecting />;
   }
   return (
     <div className="flex h-svh items-center justify-center">
