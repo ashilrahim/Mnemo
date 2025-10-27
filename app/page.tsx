@@ -130,9 +130,11 @@ export default async function Home() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-600 dark:text-white">
           <p>© {new Date().getFullYear()} Mnemo. All rights reserved.</p>
           <div className="flex gap-4 mt-2 md:mt-0">
-            <Link href="/about">About</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/contact">Contact</Link>
+            <Link href="/home">Home</Link>
+            <Link href="/features">Features</Link>
+            <Link href="/pricing">Pricing</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms of Service</Link>
           </div>
         </div>
       </footer>

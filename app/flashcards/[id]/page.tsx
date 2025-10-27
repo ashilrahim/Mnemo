@@ -74,10 +74,10 @@ export default function FlashcardsPage() {
   if (quizComplete) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="p-8 rounded-2xl shadow-lg text-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white">
+        <div className="p-8 rounded-2xl shadow-lg text-center bg-gradient-to-t from-[#cfd9df] to-[#e2ebf0] text-white">
           <h2 className="text-2xl font-bold mb-2">🎉 Quiz Complete!</h2>
           <p className="text-xl mb-4">
-            Your Score: <span className="font-extrabold">{score}</span> / {flashcards.length}
+            Your Score: <span className="font-sans">{score}</span> / {flashcards.length}
           </p>
           <button
             onClick={() => router.push('/dashboard')}
