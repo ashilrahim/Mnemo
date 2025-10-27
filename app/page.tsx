@@ -12,12 +12,18 @@ import { Features } from "@/components/features-1";
 
 import { PricingInteraction } from "@/components/ui/pricing-interaction";
 import { FloatingHeader } from "@/components/floating-header";
+import HeroSection from "@/components/HeroSection";
 
-import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+
+
 
 
 
 export default async function Home() {
+
+  const handleAnimationComplete = () => {
+    console.log('Animation completed!');
+  };
 
 
   const supabase = createClient();
@@ -34,19 +40,8 @@ export default async function Home() {
       {/* navbar section */}
       <FloatingHeader />
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-30 md:py-55" id="home">
-        <h1 className="text-4xl md:text-6xl font-sans text-gray-900 mb-6 in-dark:text-white">
-          Turn Your Documents into Smart Flashcards
-        </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-8 in-dark:text-amber-50" >
-          Upload your study materials and instantly generate flashcards powered
-          by AI. Save time, remember more, and make learning effortless.
-        </p>
-        <Link
-          href="/login"
-        >
-          <InteractiveHoverButton />
-        </Link>
+      <HeroSection />
+        
         <GridPattern
           squares={[
             [4, 4],
@@ -69,8 +64,7 @@ export default async function Home() {
         />
 
 
-      </section>
-
+    
       {/* How It Works */}
       <section className="px-6 py-20" id="features">
 
