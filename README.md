@@ -12,7 +12,7 @@ Mnemo helps you learn faster by automatically creating MCQs and flashcards from 
 
 
 ## 📸 Preview
-<img width="1898" height="923" alt="mnemoscnsht" src="https://github.com/user-attachments/assets/98ab178e-9497-4905-adf5-bbcde5322443" />
+<img width="1898" height="923" alt="mnemoscnsht" src="https://mnemo-pi.vercel.app" />
 
 ---
 
