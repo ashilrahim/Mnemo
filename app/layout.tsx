@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +25,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning> 
+    <html lang="en" suppressHydrationWarning>
+      <Head>
+        <title>Mnemo Pi - Your Memory Assistant</title>
+        <meta name="description" content="A live demo of Mnemo Pi for mnemonic training." />
+
+        {/* Open Graph for general sharing */}
+        <meta property="og:title" content="Mnemo Pi Live Demo" />
+        <meta property="og:description" content="Try the interactive memory app now!" />
+        <meta property="og:url" content="https://mnemo-pi.vercel.app" />
+        <meta property="og:type" content="video.other" />
+        <meta property="og:video:width" content="1280" />
+        <meta property="og:video:height" content="720" />
+        <meta property="og:image" content="mnemoscnsht.jpg" />  {/* Fallback image */}
+
+        {/* Twitter Card for Twitter sharing */}
+        <meta name="twitter:card" content="app" />
+        <meta name="twitter:app:country" content="US" />
+        <meta name="twitter:app:name:iphone" content="Mnemo Pi" />
+        <meta name="twitter:app:url:iphone" content="mnemo-pi://demo" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
