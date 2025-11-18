@@ -31,6 +31,7 @@ export default function RootLayout({
       <Head>
         <title>Mnemo Pi - Your Memory Assistant</title>
         <meta name="description" content="A live demo of Mnemo Pi for mnemonic training." />
+        <meta name="google-site-verification" content="uZS0_SLvUTswAuer28AF_JXCgdmZO0IN12UglJH7nLs" />
 
         {/* Open Graph for general sharing */}
         <meta property="og:title" content="Mnemo Pi Live Demo" />
