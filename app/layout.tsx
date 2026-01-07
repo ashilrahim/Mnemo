@@ -29,8 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
-        <title>Mnemo Pi - Your Memory Assistant</title>
-        <meta name="description" content="A live demo of Mnemo Pi for mnemonic training." />
+        <title>Mnemo – AI MCQ Flashcard Generator</title>
+        <meta name="description" content="Generate MCQ flashcards instantly using Mnemo, an AI-powered study tool." />
         <meta name="google-site-verification" content="uZS0_SLvUTswAuer28AF_JXCgdmZO0IN12UglJH7nLs" />
 
         {/* Open Graph for general sharing */}
