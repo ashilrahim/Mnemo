@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
@@ -28,7 +28,9 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState<"idle" | "success" | "error">("idle");
+  const [uploadStatus, setUploadStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // handle selecting files
@@ -40,10 +42,11 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
     }
   };
 
-
   // handle uploading to /api/upload
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    // prevent resubmission without a refresh
+    if (uploaded) return;
     if (files.length === 0) return;
 
     setUploading(true);
@@ -92,7 +95,22 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
   });
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full space-y-4">
+      {/* status alert pinned to the top of the form */}
+      {uploadStatus === "success" && (
+        <Alert className="w-full">
+          <CheckCircle2 className="h-5 w-5 text-green-600" />
+          <AlertTitle>File uploaded successfully!</AlertTitle>
+        </Alert>
+      )}
+
+      {uploadStatus === "error" && (
+        <Alert variant="destructive" className="w-full">
+          <AlertCircle className="h-5 w-5 text-red-600" />
+          <AlertTitle>File upload failed. Please try again.</AlertTitle>
+        </Alert>
+      )}
+
       <div {...getRootProps()} onClick={handleClick}>
         <motion.div
           whileHover="animate"
@@ -102,7 +120,9 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
             ref={fileInputRef}
             id="file-upload-handle"
             type="file"
-            onChange={(e) => handleFileChange(e.target.files ? [e.target.files[0]] : [])}
+            onChange={(e) =>
+              handleFileChange(e.target.files ? [e.target.files[0]] : [])
+            }
             className="hidden"
           />
 
@@ -122,7 +142,6 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
             <div className="relative w-full mt-10 max-w-xl mx-auto">
               {files.length > 0 && files[0] && (
                 <motion.div
-
                   layoutId="file-upload"
                   className={cn(
                     "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
@@ -154,11 +173,9 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
                     >
                       {files[0].type}
                     </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      modified {new Date(files[0].lastModified).toLocaleDateString()}
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                      modified{" "}
+                      {new Date(files[0].lastModified).toLocaleDateString()}
                     </motion.p>
                   </div>
                 </motion.div>
@@ -196,20 +213,19 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
                 />
               )}
             </div>
-
-
           </div>
         </motion.div>
-
       </div>
       <div className="mt-6 flex justify-center">
         {files.length > 0 && (
-          <Button variant="secondary"
+          <Button
+            variant="secondary"
             type="submit"
-            {...(uploading && { disabled: true })}
+            disabled={uploading || uploaded}
             onClick={(e) => {
-              e.stopPropagation();   // 👈 prevent triggering handleClick
-            }}>
+              e.stopPropagation(); // 👈 prevent triggering handleClick
+            }}
+          >
             {uploading ? (
               <>
                 <Spinner /> Uploading...
@@ -219,26 +235,10 @@ export default function UploadForm({ onUpload }: UploadFormProps) {
             ) : (
               "Upload Document"
             )}
-
           </Button>
-        )}
-
-        {uploadStatus === "success" && (
-          <Alert>
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
-            <AlertTitle>File uploaded successfully!</AlertTitle>
-          </Alert>
-        )}
-
-        {uploadStatus === "error" && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-5 w-5 text-red-600" />
-            <AlertTitle> File upload failed. Please try again.</AlertTitle>
-          </Alert>
         )}
       </div>
       {/* upload button */}
-
     </form>
   );
 }
@@ -254,10 +254,11 @@ function GridPattern() {
           return (
             <div
               key={`${col}-${row}`}
-              className={`w-10 h-10 flex flex-shrink-0 rounded-[2px] ${index % 2 === 0
-                ? "bg-gray-50 dark:bg-neutral-950"
-                : "bg-gray-50 dark:bg-neutral-950 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset] dark:shadow-[0px_0px_1px_3px_rgba(0,0,0,1)_inset]"
-                }`}
+              className={`w-10 h-10 flex flex-shrink-0 rounded-[2px] ${
+                index % 2 === 0
+                  ? "bg-gray-50 dark:bg-neutral-950"
+                  : "bg-gray-50 dark:bg-neutral-950 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset] dark:shadow-[0px_0px_1px_3px_rgba(0,0,0,1)_inset]"
+              }`}
             />
           );
         })
@@ -265,4 +266,3 @@ function GridPattern() {
     </div>
   );
 }
-
